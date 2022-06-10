@@ -93,6 +93,9 @@ class FilesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.extendedLayoutIncludesOpaqueBars = true
+  
+        
         manager.delegate = self
         
         setupAppearance()

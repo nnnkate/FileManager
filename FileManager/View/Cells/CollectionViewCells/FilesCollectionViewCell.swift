@@ -34,7 +34,7 @@ class FilesCollectionViewCell: UICollectionViewCell, FilesCell {
         let verticalStack = UIStackView()
         verticalStack.axis = .vertical
         verticalStack.alignment = .center
-        verticalStack.distribution = .fillProportionally
+        verticalStack.distribution = .fillEqually
         verticalStack.spacing = 5
         
         addSubview(verticalStack)
@@ -47,14 +47,21 @@ class FilesCollectionViewCell: UICollectionViewCell, FilesCell {
             verticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 5)
         ])
         
+        let contentView = UIView()
+        verticalStack.addArrangedSubview(contentView)
+        
         let imageView = UIImageView()
         self.fileImageView = imageView
         self.fileImageView.tintColor = .white
         
-        verticalStack.addArrangedSubview(imageView)
-        
+        contentView.addSubview(imageView)
+
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
         ])
      

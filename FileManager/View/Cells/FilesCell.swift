@@ -38,5 +38,6 @@ extension FilesCell {
         }
         
         self.fileImageView.image = image
+        self.fileImageView.contentMode = .scaleAspectFit
     }
 }

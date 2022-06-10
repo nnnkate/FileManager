@@ -21,7 +21,6 @@ class ImageViewController: UIViewController {
         view.addSubview(scrollView)
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
- 
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -30,10 +29,12 @@ class ImageViewController: UIViewController {
         ])
 
         imageView = UIImageView()
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        
         scrollView.addSubview(imageView)
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             imageView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
@@ -55,7 +56,6 @@ class ImageViewController: UIViewController {
             contentViewHeight
         ])
 
-        imageView.image = image
         setUpScrollView()
     }
     

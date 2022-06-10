@@ -96,6 +96,12 @@ final class FilesManagerService {
             navigationController?.pushViewController(selectImageViewContoller, animated: true)
         }
     }
+    
+    func deleteFile(file: FilesUnit) {
+        try? FileManager.default.removeItem(at: file.path)
+        
+        updateFilesData()
+    }
 }
 
 enum ViewType: String {

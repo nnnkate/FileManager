@@ -15,6 +15,14 @@ extension FilesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         manager.openFile(file: manager.filesData[indexPath.row], navigationController: navigationController)
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        manager.deleteFile(file: manager.filesData[indexPath.row])
+     }
 }
 
 extension FilesViewController: UITableViewDataSource {

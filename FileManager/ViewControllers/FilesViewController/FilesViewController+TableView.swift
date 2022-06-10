@@ -8,28 +8,6 @@
 import UIKit
 
 extension FilesViewController: UITableViewDelegate {
-    func setUpTableView() {
-        filesTableView = UITableView()
-        
-        filesTableView.backgroundColor = UIColor.clear
-        
-        filesTableView.delegate = self
-        filesTableView.dataSource = self
-        
-        filesTableView.register(FilesTableViewCell.classForCoder(),
-                                forCellReuseIdentifier: FilesTableViewCell.id)
-        
-        view.addSubview(filesTableView)
-        
-        filesTableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            filesTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            filesTableView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            filesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            filesTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20)
-        ])
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         70
     }

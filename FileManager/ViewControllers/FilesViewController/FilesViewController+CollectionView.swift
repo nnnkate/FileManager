@@ -14,24 +14,6 @@ extension FilesViewController {
         return CGSize(width: size, height: size)
     }
     
-    func setUpCollectionView() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 60, height: 60)
-                
-        filesCollectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        
-        filesCollectionView.backgroundColor = UIColor.clear
-        
-        filesCollectionView.delegate = self
-        filesCollectionView.dataSource = self
-        
-        filesCollectionView.register(FilesCollectionViewCell.self,
-                                     forCellWithReuseIdentifier: FilesCollectionViewCell.id)
-        
-        view.addSubview(filesCollectionView)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         manager.openFile(file: manager.filesData[indexPath.row], navigationController: navigationController)
     }

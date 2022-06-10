@@ -24,7 +24,7 @@ final class FilesManagerService {
         }
     }
     
-    let fileManager = FileManager.default
+    private let fileManager = FileManager.default
     var currentDirectory = FileManager.default.urls(for: .documentDirectory,
                                                      in: .userDomainMask).first
     
@@ -38,11 +38,8 @@ final class FilesManagerService {
     var delegate: FilesManagerServiceDelegate?
     
     func updateFilesData() {
-        guard let currentDirectory = currentDirectory else { return }
-        
-        guard let contents = try? FileManager.default.contentsOfDirectory(at: currentDirectory, includingPropertiesForKeys: nil) else {
-            return
-        }
+        guard let currentDirectory = currentDirectory,
+              let contents = try? FileManager.default.contentsOfDirectory(at: currentDirectory, includingPropertiesForKeys: nil)  else { return }
         
         filesData = contents.map {
             let name = $0.lastPathComponent
@@ -73,9 +70,7 @@ final class FilesManagerService {
     
     func createImage(_ image: UIImage, name: String) {
         guard let currentDirectory = self.currentDirectory,
-              let data = image.jpegData(compressionQuality: 1) else {
-            return
-        }
+              let data = image.jpegData(compressionQuality: 1) else { return }
         
         let newImagePath = currentDirectory.appendingPathComponent(name)
         

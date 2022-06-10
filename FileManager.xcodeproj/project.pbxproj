@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85005EDE2853204A007CFE80 /* FilesViewControlle+PHPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85005EDD28532049007CFE80 /* FilesViewControlle+PHPicker.swift */; };
+		85005EE028532127007CFE80 /* FilesViewController+UIImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85005EDF28532127007CFE80 /* FilesViewController+UIImagePicker.swift */; };
 		850733D228510C4200727950 /* FilesViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850733D128510C4200727950 /* FilesViewController+CollectionView.swift */; };
 		850733D428510CE700727950 /* FilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850733D328510CE700727950 /* FilesCollectionViewCell.swift */; };
 		850733D828510E5800727950 /* FilesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850733D728510E5800727950 /* FilesCell.swift */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		85005EDD28532049007CFE80 /* FilesViewControlle+PHPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilesViewControlle+PHPicker.swift"; sourceTree = "<group>"; };
+		85005EDF28532127007CFE80 /* FilesViewController+UIImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilesViewController+UIImagePicker.swift"; sourceTree = "<group>"; };
 		850733D128510C4200727950 /* FilesViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilesViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		850733D328510CE700727950 /* FilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewCell.swift; sourceTree = "<group>"; };
 		850733D728510E5800727950 /* FilesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCell.swift; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				85C42B672846967300015B3B /* FilesViewController.swift */,
+				85005EDD28532049007CFE80 /* FilesViewControlle+PHPicker.swift */,
+				85005EDF28532127007CFE80 /* FilesViewController+UIImagePicker.swift */,
 				85D6EFD1284CF44B00E3FB7B /* FilesViewController+TableView.swift */,
 				850733D128510C4200727950 /* FilesViewController+CollectionView.swift */,
 			);
@@ -250,8 +256,10 @@
 				85C42B662846967300015B3B /* SceneDelegate.swift in Sources */,
 				85C42B7F2846AB9300015B3B /* FilesTableViewCell.swift in Sources */,
 				85D6EFD7284CF70E00E3FB7B /* FilesManagerService.swift in Sources */,
+				85005EDE2853204A007CFE80 /* FilesViewControlle+PHPicker.swift in Sources */,
 				850733D828510E5800727950 /* FilesCell.swift in Sources */,
 				85D6EFD2284CF44B00E3FB7B /* FilesViewController+TableView.swift in Sources */,
+				85005EE028532127007CFE80 /* FilesViewController+UIImagePicker.swift in Sources */,
 				850733D228510C4200727950 /* FilesViewController+CollectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

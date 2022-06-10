@@ -10,12 +10,41 @@ import PhotosUI
 
 class FilesViewController: UIViewController {
     
-    var filesTableView: UITableView!
-    var filesCollectionView: UICollectionView!
+    private let layout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 60, height: 60)
+        
+        return layout
+    }()
     
-    var manager = FilesManagerService()
+    lazy var filesTableView: UITableView = {
+        let filesTableView = UITableView()
+        
+        filesTableView.delegate = self
+        filesTableView.dataSource = self
     
-    var mainMenuItems: [UIMenuElement] {
+        filesTableView.register(FilesTableViewCell.classForCoder(),
+                        forCellReuseIdentifier: FilesTableViewCell.id)
+    
+        return filesTableView
+    }()
+  
+    lazy var filesCollectionView: UICollectionView = {
+        filesCollectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        
+        filesCollectionView.delegate = self
+        filesCollectionView.dataSource = self
+        
+        filesCollectionView.register(FilesCollectionViewCell.self,
+                                     forCellWithReuseIdentifier: FilesCollectionViewCell.id)
+        
+        return filesCollectionView
+    }()
+    
+    private(set) var manager = FilesManagerService()
+    
+    private var mainMenuItems: [UIMenuElement] {
         return [
             UIAction(title: "Select", image: UIImage(systemName: "checkmark.circle"), attributes: .disabled, handler: { (_) in
                     }),
@@ -40,7 +69,7 @@ class FilesViewController: UIViewController {
         ]
     }
     
-    var switchInterfaceItems: [UIAction] {
+    private var switchInterfaceItems: [UIAction] {
         return [
             UIAction(title: ViewType.list.rawValue,
                      image: UIImage(systemName: "list.bullet"),
@@ -57,7 +86,7 @@ class FilesViewController: UIViewController {
         ]
     }
 
-    var mainMenu: UIMenu {
+    private var mainMenu: UIMenu {
         return UIMenu(title: "Menu", children: mainMenuItems)
     }
 
@@ -66,9 +95,11 @@ class FilesViewController: UIViewController {
         
         manager.delegate = self
         
+        setupAppearance()
+        addSubviews()
+        configureLayout()
+        
         setUpNavigationBar()
-        setUpTableView()
-        setUpCollectionView()
         
         manager.updateFilesData()
         
@@ -148,53 +179,35 @@ class FilesViewController: UIViewController {
 
 extension FilesViewController: FilesManagerServiceDelegate {
     func reloadData() {
-        filesTableView.reloadData()
-    }
-}
-
-extension FilesViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.originalImage] as? UIImage,
-              let imageName = (info[.imageURL] as? URL)?.lastPathComponent else {
-            return
+        DispatchQueue.main.async {
+            self.filesTableView.reloadData()
+            self.filesCollectionView.reloadData()
         }
-        
-        manager.createImage(image, name: imageName)
-        
-        picker.dismiss(animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("canceled")
-        
-        picker.dismiss(animated: true)
     }
 }
 
-extension FilesViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        for result in results {
-            let itemProvider = result.itemProvider
-            guard itemProvider.canLoadObject(ofClass: UIImage.self)  else { return }
+// MARK: - Appearance Methods
 
-            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-                guard let image = image as? UIImage  else { return }
-                
-                itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) { imageURL, error in
-                    guard let imageName = imageURL?.lastPathComponent else { return }
-                    
-                    self.manager.createImage(image, name: imageName)
-                }
-                 
-            }
-        }
-            
-        picker.dismiss(animated: true)
+private extension FilesViewController {
+    
+    func setupAppearance() {
+        filesTableView.backgroundColor = UIColor.clear
+        filesCollectionView.backgroundColor = UIColor.clear
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let fileUrl = info[UIImagePickerController.InfoKey.imageURL.rawValue] as? URL else { return }
-        print(fileUrl.lastPathComponent)
+    func addSubviews() {
+        view.addSubview(filesTableView)
+        view.addSubview(filesCollectionView)
     }
     
+    func configureLayout() {
+        filesTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            filesTableView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            filesTableView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            filesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            filesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
+        ])
+    }
 }
+

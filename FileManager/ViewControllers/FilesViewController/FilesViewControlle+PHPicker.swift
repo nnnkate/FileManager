@@ -8,6 +8,17 @@
 import PhotosUI
 
 extension FilesViewController: PHPickerViewControllerDelegate {
+    func uploadImage() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 0
+        
+        let pickerViewController = PHPickerViewController(configuration: configuration)
+        
+        pickerViewController.delegate = self
+        
+        present(pickerViewController, animated: true)
+    }
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         for result in results {
             let itemProvider = result.itemProvider

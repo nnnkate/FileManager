@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageViewController: UIViewController {
+final class ImageViewController: UIViewController {
 
     var imageView: UIImageView!
     var scrollView: UIScrollView!

@@ -8,15 +8,7 @@
 import UIKit
 import PhotosUI
 
-class FilesViewController: UIViewController {
-    
-    private let layout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 60, height: 60)
-        
-        return layout
-    }()
+final class FilesViewController: UIViewController {
     
     lazy var filesTableView: UITableView = {
         let filesTableView = UITableView()
@@ -43,6 +35,16 @@ class FilesViewController: UIViewController {
     }()
     
     let manager = FilesManagerService()
+    
+    // MARK: - Private properties
+    
+    private let layout: UICollectionViewFlowLayout = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 60, height: 60)
+        
+        return layout
+    }()
     
     private var mainMenuItems: [UIMenuElement] {
         return [
@@ -91,11 +93,11 @@ class FilesViewController: UIViewController {
     private var mainMenu: UIMenu {
         return UIMenu(title: "Menu", children: mainMenuItems)
     }
+    
+    // MARK: - UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.extendedLayoutIncludesOpaqueBars = true
   
         manager.delegate = self
         
@@ -106,15 +108,6 @@ class FilesViewController: UIViewController {
         setUpNavigationBar()
         
         manager.updateFilesData()
-        
-        let viewTypeSetting = UserDefaults.standard.string(forKey: ViewType.settingName)
-        manager.viewType = viewTypeSetting == ViewType.icons.rawValue ? .icons : .list
-    }
-    
-    private func setUpNavigationBar() {
-        let rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: mainMenu)
-        
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
     private func showAlert() {
@@ -146,28 +139,6 @@ class FilesViewController: UIViewController {
         present(alertController, animated: true)
     }
     
-    private func uploadCameraPhoto() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
-        
-        imagePicker.allowsEditing = true
-        
-        imagePicker.delegate = self
-        
-        present(imagePicker, animated: true)
-    }
-    
-    private func uploadImage() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 0
-        
-        let pickerViewController = PHPickerViewController(configuration: configuration)
-        
-        pickerViewController.delegate = self
-        
-        present(pickerViewController, animated: true)
-    }
-    
     private func handleNewFileButtonTap(type: FilesUnitType = .folder) {
         switch type {
         case .folder:
@@ -194,6 +165,8 @@ class FilesViewController: UIViewController {
 
 }
 
+// MARK: - FilesManagerServiceDelegate
+
 extension FilesViewController: FilesManagerServiceDelegate {
     func reloadData() {
         DispatchQueue.main.async {
@@ -206,18 +179,26 @@ extension FilesViewController: FilesManagerServiceDelegate {
 // MARK: - Appearance Methods
 
 private extension FilesViewController {
+    private func setUpNavigationBar() {
+        let rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: mainMenu)
+        
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
     
-    func setupAppearance() {
+    private func setupAppearance() {
+        let viewTypeSetting = UserDefaults.standard.string(forKey: ViewType.settingName)
+        manager.viewType = viewTypeSetting == ViewType.icons.rawValue ? .icons : .list
+        
         filesTableView.backgroundColor = UIColor.clear
         filesCollectionView.backgroundColor = UIColor.clear
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         view.addSubview(filesTableView)
         view.addSubview(filesCollectionView)
     }
     
-    func configureLayout() {
+    private func configureLayout() {
         filesTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             filesTableView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),

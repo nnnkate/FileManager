@@ -10,6 +10,8 @@ import UIKit
 
 final class FilesManagerService {
     
+    // MARK: - Public Properties
+    
     var viewMode: ViewMode = .view
     
     var viewType: ViewType = .list {
@@ -18,7 +20,6 @@ final class FilesManagerService {
         }
     }
     
-    private let fileManager = FileManager.default
     var currentDirectory = FileManager.default.urls(for: .documentDirectory,
                                                      in: .userDomainMask).first
     
@@ -30,6 +31,12 @@ final class FilesManagerService {
     }
     
     var delegate: FilesManagerServiceDelegate?
+    
+    // MARK: - Private properties
+    
+    private let fileManager = FileManager.default
+    
+    // MARK: - Files handling methods
     
     func updateFilesData() {
         guard let currentDirectory = currentDirectory,

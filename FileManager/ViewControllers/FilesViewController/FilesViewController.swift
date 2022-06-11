@@ -10,6 +10,8 @@ import PhotosUI
 
 final class FilesViewController: UIViewController {
     
+    // MARK: - Public Properties
+    
     lazy var filesTableView: UITableView = {
         let filesTableView = UITableView()
         

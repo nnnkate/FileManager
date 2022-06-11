@@ -8,18 +8,54 @@
 import UIKit
 
 final class ImageViewController: UIViewController {
-
-    var imageView: UIImageView!
-    var scrollView: UIScrollView!
+    
+    // MARK: - Public Properties
     
     var image: UIImage?
+
+    // MARK: - Private properties
+    
+    private var imageView = UIImageView()
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.delegate = self
+        
+        return scrollView
+    }()
+    
+    // MARK: - UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        scrollView = UIScrollView()
+        setupAppearance()
+        addSubviews()
+        configureLayout()
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension ImageViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        imageView
+    }
+}
+
+// MARK: - Appearance Methods
+
+private extension ImageViewController {
+    private func setupAppearance() {
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+    }
+    
+    private func addSubviews() {
         view.addSubview(scrollView)
-        
+        scrollView.addSubview(imageView)
+    }
+    
+    private func configureLayout() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -28,13 +64,7 @@ final class ImageViewController: UIViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
-        imageView = UIImageView()
-        imageView.image = image
-        imageView.contentMode = .scaleAspectFit
-        
-        scrollView.addSubview(imageView)
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+       imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             imageView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
@@ -43,7 +73,7 @@ final class ImageViewController: UIViewController {
             imageView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
             imageView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor)
         ])
-
+        
         let contentViewCenterY = imageView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor)
         contentViewCenterY.priority = .defaultLow
 
@@ -55,17 +85,6 @@ final class ImageViewController: UIViewController {
             contentViewCenterY,
             contentViewHeight
         ])
-
-        setUpScrollView()
-    }
-    
-    private func setUpScrollView() {
-        scrollView.delegate = self
     }
 }
 
-extension ImageViewController: UIScrollViewDelegate {
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        imageView
-    }
-}

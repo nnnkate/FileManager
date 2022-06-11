@@ -17,6 +17,8 @@ final class FilesViewController: UIViewController {
         
         filesTableView.delegate = self
         filesTableView.dataSource = self
+        
+        filesTableView.allowsMultipleSelection = true
     
         filesTableView.register(FilesTableViewCell.classForCoder(),
                         forCellReuseIdentifier: FilesTableViewCell.id)
@@ -50,12 +52,15 @@ final class FilesViewController: UIViewController {
     
     private var mainMenuItems: [UIMenuElement] {
         return [
-            UIAction(title: "Select", image: UIImage(systemName: "checkmark.circle"), attributes: .disabled, handler: { (_) in
-                    }),
+            UIAction(title: "Select",
+                     image: UIImage(systemName: "checkmark.circle"),
+                     handler: { (_) in
+                         self.manager.viewMode = .select
+            }),
             UIAction(title: "Add new folder",
                      image: UIImage(systemName: "folder.badge.plus"),
                      handler: { _ in
-                self.handleNewFileButtonTap()
+                         self.handleNewFileButtonTap()
             }),
             UIAction(title: "Add new photo",
                      image: UIImage(systemName: "photo"),
@@ -65,11 +70,11 @@ final class FilesViewController: UIViewController {
             UIAction(title: "Upload image",
                      image: UIImage(systemName: "rectangle.stack.badge.plus"),
                      handler: { _ in
-                self.handleNewFileButtonTap(type: .image)
+                         self.handleNewFileButtonTap(type: .image)
             }),
-            UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { (_) in
-            }),
-            UIMenu(title: "", options: .displayInline, children: switchInterfaceItems)
+            UIMenu(title: "",
+                   options: .displayInline,
+                   children: switchInterfaceItems)
         ]
     }
     
@@ -152,17 +157,21 @@ final class FilesViewController: UIViewController {
         }
     }
     
-    func handleViewTypeChange() {
-        switch manager.viewType {
-        case .list:
-            filesTableView.isHidden = false
-            filesCollectionView.isHidden = true
+    func  handleCellTap(indexPath: IndexPath) {
+        let file = manager.filesData[indexPath.row]
+        
+        switch manager.viewMode {
+        case .select:
+            manager.selectFile(file: file)
             
-        case .icons:
-            filesTableView.isHidden = true
-            filesCollectionView.isHidden = false
+        case .view:
+            manager.openFile(file: manager.filesData[indexPath.row], navigationController: navigationController)
         }
-        self.setUpNavigationBar()
+    }
+    
+    func  handleBarButtonTap() {
+        self.manager.handleSelectionCompleted()
+        self.manager.viewMode = .view
     }
 
 }
@@ -176,15 +185,55 @@ extension FilesViewController: FilesManagerServiceDelegate {
             self.filesCollectionView.reloadData()
         }
     }
+    
+    func handleViewTypeChange() {
+        switch manager.viewType {
+        case .list:
+            filesTableView.isHidden = false
+            filesCollectionView.isHidden = true
+            
+        case .icons:
+            filesTableView.isHidden = true
+            filesCollectionView.isHidden = false
+        }
+        self.setUpNavigationBar()
+    }
+    
+    func handleViewModeChange() {
+        setUpNavigationBar()
+    }
+    
 }
 
 // MARK: - Appearance Methods
 
 private extension FilesViewController {
     private func setUpNavigationBar() {
-        let rightBarButtonItem = UIBarButtonItem(title: nil, image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: mainMenu)
+        self.navigationItem.rightBarButtonItems?.removeAll()
         
-        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        switch manager.viewMode {
+        case .select:
+            let cancelBarButtonItem = UIBarButtonItem(systemItem: .cancel,
+                                                 primaryAction: UIAction(handler: { _ in
+                self.handleBarButtonTap()
+            }))
+            
+            let deleteBarButtonItem = UIBarButtonItem(systemItem: .trash,
+                                                 primaryAction: UIAction(handler: { _ in
+                self.manager.deleteFiles()
+                self.handleBarButtonTap()
+            }))
+            
+            self.navigationItem.rightBarButtonItems = [deleteBarButtonItem, cancelBarButtonItem]
+            
+        case .view:
+            let rightBarButtonItem = UIBarButtonItem(title: nil,
+                                                 image: UIImage(systemName: "ellipsis.circle"),
+                                                 primaryAction: nil,
+                                                 menu: mainMenu)
+            
+            self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        }
     }
     
     private func setupAppearance() {

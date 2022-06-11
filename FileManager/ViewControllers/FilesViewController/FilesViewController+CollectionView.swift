@@ -19,11 +19,15 @@ extension FilesViewController {
     }
 }
 
+//MARK: - UICollectionViewDelegateFlowLayout
+
 extension FilesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionCellSize
     }
 }
+
+//MARK: - UICollectionViewDataSource
 
 extension FilesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -31,7 +35,8 @@ extension FilesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilesCollectionViewCell.id, for: indexPath) as? FilesCollectionViewCell else {
+        guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: FilesCollectionViewCell.id,
+                                                                          for: indexPath) as? FilesCollectionViewCell else {
             return UICollectionViewCell()
         }
 

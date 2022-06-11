@@ -13,7 +13,11 @@ extension FilesViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        manager.openFile(file: manager.filesData[indexPath.row], navigationController: navigationController)
+        handleCellTap(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        handleCellTap(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -35,7 +39,10 @@ extension FilesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        filesTableViewCell.updateData(file: manager.filesData[indexPath.row])
+        let file = manager.filesData[indexPath.row]
+        filesTableViewCell.updateData(file: file, selected: manager.selectedFiles.contains(file))
+        
+        filesTableViewCell.selectionStyle = .none
         
         return filesTableViewCell
     }

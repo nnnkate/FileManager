@@ -11,13 +11,23 @@ class FilesTableViewCell: UITableViewCell, FilesCell {
 
     static let id = "FilesTableViewCell"
     
-    var fileImageView: UIImageView!
-    var fileNameLabel: UILabel!
+    private let horizontalStack = UIStackView()
+    
+    var fileImageView = UIImageView()
+    var fileNameLabel = UILabel()
+    
+    override var isSelected: Bool {
+        didSet {
+            self.backgroundColor = isSelected ? .gray : .clear
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        configureCell()
+        setupAppearance()
+        addSubviews() 
+        configureLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -35,15 +45,30 @@ class FilesTableViewCell: UITableViewCell, FilesCell {
         // Configure the view for the selected state
     }
     
-    private func configureCell() {
+}
+
+// MARK: - Appearance Methods
+
+private extension FilesTableViewCell {
+    func setupAppearance() {
         self.backgroundColor = .clear
         
-        let horizontalStack = UIStackView()
         horizontalStack.axis = .horizontal
         horizontalStack.spacing = 10
         
-        addSubview(horizontalStack)
+        fileNameLabel.font = fileNameLabel.font.withSize(30)
+        fileNameLabel.textColor = .white
         
+        fileImageView.tintColor = .white
+    }
+    
+    func addSubviews() {
+        addSubview(horizontalStack)
+        horizontalStack.addArrangedSubview(fileImageView)
+        horizontalStack.addArrangedSubview(fileNameLabel)
+    }
+    
+    func configureLayout() {
         horizontalStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             horizontalStack.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -52,22 +77,10 @@ class FilesTableViewCell: UITableViewCell, FilesCell {
             horizontalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 5)
         ])
         
-        let fileImageView = UIImageView()
-        self.fileImageView = fileImageView
-        
-        horizontalStack.addArrangedSubview(fileImageView)
-        
+        fileImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             fileImageView.widthAnchor.constraint(equalTo: fileImageView.heightAnchor)
         ])
-        
-        let fileNameLabel = UILabel()
-        fileNameLabel.font = fileNameLabel.font.withSize(30)
-        self.fileNameLabel = fileNameLabel
-        
-        horizontalStack.addArrangedSubview(fileNameLabel)
-        
-        fileImageView.tintColor = .white
-        fileNameLabel.textColor = .white
     }
 }
+

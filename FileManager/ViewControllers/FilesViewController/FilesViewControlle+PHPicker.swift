@@ -43,5 +43,4 @@ extension FilesViewController: PHPickerViewControllerDelegate {
         guard let fileUrl = info[UIImagePickerController.InfoKey.imageURL.rawValue] as? URL else { return }
         print(fileUrl.lastPathComponent)
     }
-    
 }

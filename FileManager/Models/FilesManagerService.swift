@@ -12,7 +12,11 @@ final class FilesManagerService {
     
     // MARK: - Public Properties
     
-    var viewMode: ViewMode = .view
+    var viewMode: ViewMode = .view {
+        didSet {
+            delegate?.handleViewModeChange()
+        }
+    }
     
     var viewType: ViewType = .list {
         didSet {
@@ -29,6 +33,8 @@ final class FilesManagerService {
             filesData.sort { $1.type.sortPriority > $0.type.sortPriority }
         }
     }
+    
+    var selectedFiles = [FilesUnit]()
     
     var delegate: FilesManagerServiceDelegate?
     
@@ -101,6 +107,36 @@ final class FilesManagerService {
     func deleteFile(file: FilesUnit) {
         try? FileManager.default.removeItem(at: file.path)
         
+        updateFilesData()
+    }
+    
+    func deleteFiles() {
+        guard viewMode == .select else { return }
+        
+        for file in selectedFiles {
+            try? FileManager.default.removeItem(at: file.path)
+        }
+        
+        viewMode = .view
+        
+        updateFilesData()
+    }
+    
+    func selectFile(file: FilesUnit) {
+        guard viewMode == .select else { return }
+        
+        if let index = selectedFiles.firstIndex(of: file) {
+            selectedFiles.remove(at: index)
+        }
+        else {
+            selectedFiles.append(file)
+        }
+        
+        delegate?.reloadData()
+    }
+    
+    func handleSelectionCompleted() {
+        selectedFiles.removeAll()
         updateFilesData()
     }
 }

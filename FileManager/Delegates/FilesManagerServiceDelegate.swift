@@ -14,4 +14,5 @@ protocol FilesManagerServiceDelegate {
     
     func reloadData()
     func handleViewTypeChange()
+    func handleViewModeChange()
 }

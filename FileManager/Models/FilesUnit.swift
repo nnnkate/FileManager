@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FilesUnit {
+struct FilesUnit: Equatable {
     let name: String
     let path: URL
     

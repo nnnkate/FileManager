@@ -8,18 +8,20 @@
 import Foundation
 import UIKit
 
-protocol FilesCell {
-    var fileImageView: UIImageView! { get }
-    var fileNameLabel: UILabel! { get }
+protocol FilesCell: AnyObject {
+    var fileImageView: UIImageView { get }
+    var fileNameLabel: UILabel { get }
+    var isSelected: Bool { get set } 
     
-    func updateData(file: FilesUnit)
+    func updateData(file: FilesUnit, selected: Bool)
 }
 
 extension FilesCell {
-    func updateData(file: FilesUnit) {
+    func updateData(file: FilesUnit, selected: Bool = false) {
         updateImage(file: file)
         
         self.fileNameLabel.text = file.name
+        self.isSelected = selected
     }
     
     private func updateImage(file: FilesUnit) {

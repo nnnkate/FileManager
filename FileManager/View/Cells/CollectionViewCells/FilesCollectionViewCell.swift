@@ -11,8 +11,11 @@ final class FilesCollectionViewCell: UICollectionViewCell, FilesCell {
     
     static let id = "FilesCollectionViewCell"
     
-    var fileImageView: UIImageView!
-    var fileNameLabel: UILabel!
+    var fileImageView = UIImageView()
+    var fileNameLabel = UILabel()
+    
+    private let verticalStack = UIStackView()
+    private let layerView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,16 +32,36 @@ final class FilesCollectionViewCell: UICollectionViewCell, FilesCell {
         
         configureCell()
     }
+    
+    func configureCell() {
+        setupAppearance()
+        addSubviews()
+        configureLayout()
+    }
+    
+}
 
-    private func configureCell() {
-        let verticalStack = UIStackView()
+// MARK: - Appearance Methods
+
+private extension FilesCollectionViewCell {
+    func setupAppearance() {
         verticalStack.axis = .vertical
         verticalStack.alignment = .center
         verticalStack.distribution = .fillEqually
         verticalStack.spacing = 5
         
+        self.fileImageView.tintColor = .white
+        self.fileNameLabel.textColor = .white
+    }
+    
+    func addSubviews() {
         addSubview(verticalStack)
-        
+        verticalStack.addArrangedSubview(layerView)
+        layerView.addSubview(fileImageView)
+        verticalStack.addArrangedSubview(fileNameLabel)
+    }
+    
+    func configureLayout() {
         verticalStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             verticalStack.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -47,28 +70,13 @@ final class FilesCollectionViewCell: UICollectionViewCell, FilesCell {
             verticalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 5)
         ])
         
-        let contentView = UIView()
-        verticalStack.addArrangedSubview(contentView)
-        
-        let imageView = UIImageView()
-        self.fileImageView = imageView
-        self.fileImageView.tintColor = .white
-        
-        contentView.addSubview(imageView)
-
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        fileImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
+            fileImageView.centerXAnchor.constraint(equalTo: layerView.centerXAnchor),
+            fileImageView.centerYAnchor.constraint(equalTo: layerView.centerYAnchor),
+            fileImageView.leadingAnchor.constraint(equalTo: layerView.leadingAnchor),
+            fileImageView.topAnchor.constraint(equalTo: layerView.topAnchor),
+            fileImageView.widthAnchor.constraint(equalTo: fileImageView.heightAnchor)
         ])
-     
-        let label = UILabel()
-        self.fileNameLabel = label
-        self.fileNameLabel.textColor = .white
-        
-        verticalStack.addArrangedSubview(label)
     }
 }

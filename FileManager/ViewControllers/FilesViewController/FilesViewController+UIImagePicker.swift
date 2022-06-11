@@ -10,10 +10,9 @@ import UIKit
 extension FilesViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func uploadCameraPhoto() {
         let imagePicker = UIImagePickerController()
+        
         imagePicker.sourceType = .camera
-        
         imagePicker.allowsEditing = true
-        
         imagePicker.delegate = self
         
         present(imagePicker, animated: true)
@@ -31,8 +30,6 @@ extension FilesViewController: UIImagePickerControllerDelegate, UINavigationCont
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("canceled")
-        
         picker.dismiss(animated: true)
     }
 }

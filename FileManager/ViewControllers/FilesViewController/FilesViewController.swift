@@ -42,7 +42,7 @@ class FilesViewController: UIViewController {
         return filesCollectionView
     }()
     
-    private(set) var manager = FilesManagerService()
+    let manager = FilesManagerService()
     
     private var mainMenuItems: [UIMenuElement] {
         return [
@@ -73,12 +73,14 @@ class FilesViewController: UIViewController {
         return [
             UIAction(title: ViewType.list.rawValue,
                      image: UIImage(systemName: "list.bullet"),
+                     state: manager.viewType == .list ? .on : .off,
                      handler: { _ in
                          UserDefaults.standard.set(ViewType.list.rawValue, forKey: ViewType.settingName)
                          self.manager.viewType = .list
             }),
             UIAction(title: ViewType.icons.rawValue,
                      image: UIImage(systemName: "rectangle.grid.2x2"),
+                     state: manager.viewType == .icons ? .on : .off,
                      handler: { _ in
                          UserDefaults.standard.set(ViewType.icons.rawValue, forKey: ViewType.settingName)
                          self.manager.viewType = .icons
@@ -95,7 +97,6 @@ class FilesViewController: UIViewController {
         
         navigationController?.extendedLayoutIncludesOpaqueBars = true
   
-        
         manager.delegate = self
         
         setupAppearance()
@@ -176,6 +177,19 @@ class FilesViewController: UIViewController {
         case .photo:
             uploadCameraPhoto()
         }
+    }
+    
+    func handleViewTypeChange() {
+        switch manager.viewType {
+        case .list:
+            filesTableView.isHidden = false
+            filesCollectionView.isHidden = true
+            
+        case .icons:
+            filesTableView.isHidden = true
+            filesCollectionView.isHidden = false
+        }
+        self.setUpNavigationBar()
     }
 
 }

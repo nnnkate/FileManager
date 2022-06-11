@@ -10,17 +10,11 @@ import UIKit
 
 final class FilesManagerService {
     
+    var viewMode: ViewMode = .view
+    
     var viewType: ViewType = .list {
         didSet {
-            switch viewType {
-            case .list:
-                delegate?.filesTableView.isHidden = false
-                delegate?.filesCollectionView.isHidden = true
-                
-            case .icons:
-                delegate?.filesTableView.isHidden = true
-                delegate?.filesCollectionView.isHidden = false
-            }
+            delegate?.handleViewTypeChange()
         }
     }
     
@@ -102,12 +96,5 @@ final class FilesManagerService {
         
         updateFilesData()
     }
-}
-
-enum ViewType: String {
-    static let settingName = "ViewType"
-    
-    case list = "List"
-    case icons = "Icons"
 }
 

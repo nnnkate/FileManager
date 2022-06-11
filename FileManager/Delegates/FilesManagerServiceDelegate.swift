@@ -13,4 +13,5 @@ protocol FilesManagerServiceDelegate {
     var filesCollectionView: UICollectionView { get set }
     
     func reloadData()
+    func handleViewTypeChange()
 }

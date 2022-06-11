@@ -32,6 +32,8 @@ final class FilesViewController: UIViewController {
         filesCollectionView.delegate = self
         filesCollectionView.dataSource = self
         
+        filesCollectionView.allowsMultipleSelection = true
+        
         filesCollectionView.register(FilesCollectionViewCell.self,
                                      forCellWithReuseIdentifier: FilesCollectionViewCell.id)
         

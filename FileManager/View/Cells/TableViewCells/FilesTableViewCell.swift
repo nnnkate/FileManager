@@ -11,16 +11,16 @@ class FilesTableViewCell: UITableViewCell, FilesCell {
 
     static let id = "FilesTableViewCell"
     
-    private let horizontalStack = UIStackView()
-    
     var fileImageView = UIImageView()
     var fileNameLabel = UILabel()
     
-    override var isSelected: Bool {
+    var viewBackgroundColor: UIColor = .clear {
         didSet {
-            self.backgroundColor = isSelected ? .gray : .clear
+            backgroundColor = viewBackgroundColor
         }
     }
+    
+    private let horizontalStack = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

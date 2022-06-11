@@ -15,7 +15,11 @@ extension FilesViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        manager.openFile(file: manager.filesData[indexPath.row], navigationController: navigationController)
+        handleCellTap(indexPath: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        handleCellTap(indexPath: indexPath)
     }
 }
 
@@ -40,7 +44,8 @@ extension FilesViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
-        collectionViewCell.updateData(file: manager.filesData[indexPath.row])
+        let file = manager.filesData[indexPath.row]
+        collectionViewCell.updateData(file: file, selected: manager.selectedFiles.contains(file))
         
         return collectionViewCell
     }

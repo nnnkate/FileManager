@@ -13,6 +13,12 @@ final class FilesCollectionViewCell: UICollectionViewCell, FilesCell {
     
     var fileImageView = UIImageView()
     var fileNameLabel = UILabel()
+
+    var viewBackgroundColor: UIColor = .clear {
+        didSet {
+            backgroundColor = viewBackgroundColor
+        }
+    }
     
     private let verticalStack = UIStackView()
     private let layerView = UIView()

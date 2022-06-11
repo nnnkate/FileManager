@@ -11,7 +11,7 @@ import UIKit
 protocol FilesCell: AnyObject {
     var fileImageView: UIImageView { get }
     var fileNameLabel: UILabel { get }
-    var isSelected: Bool { get set } 
+    var viewBackgroundColor: UIColor { get set }
     
     func updateData(file: FilesUnit, selected: Bool)
 }
@@ -21,7 +21,7 @@ extension FilesCell {
         updateImage(file: file)
         
         self.fileNameLabel.text = file.name
-        self.isSelected = selected
+        self.viewBackgroundColor = selected ? .gray : .clear
     }
     
     private func updateImage(file: FilesUnit) {

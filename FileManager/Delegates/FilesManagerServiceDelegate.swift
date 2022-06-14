@@ -9,10 +9,8 @@ import Foundation
 import UIKit
 
 protocol FilesManagerServiceDelegate {
-    var filesTableView: UITableView { get set }
-    var filesCollectionView: UICollectionView { get set }
-    
     func reloadData()
     func handleViewTypeChange()
     func handleViewModeChange()
+    func pushViewController(_ viewController: UIViewController)
 }

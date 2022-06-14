@@ -14,17 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        if #available(iOS 15, *) {
-            let navigationBarAppearance = UINavigationBarAppearance()
-            navigationBarAppearance.configureWithOpaqueBackground()
-            navigationBarAppearance.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor : UIColor.white
-            ]
-            navigationBarAppearance.backgroundColor = UIColor.clear
-            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-            UINavigationBar.appearance().compactAppearance = navigationBarAppearance
-            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
-        }
+        setupNavigationBarAppearance()
         
         return true
     }
@@ -43,6 +33,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+}
 
+extension AppDelegate {
+    private func setupNavigationBarAppearance() {
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor : UIColor.white
+        ]
+        navigationBarAppearance.backgroundColor = UIColor.clear
+        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+        UINavigationBar.appearance().compactAppearance = navigationBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+    }
 }
 

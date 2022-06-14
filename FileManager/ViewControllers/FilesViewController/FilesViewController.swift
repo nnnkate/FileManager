@@ -82,19 +82,17 @@ final class FilesViewController: UIViewController {
     
     private var switchInterfaceItems: [UIAction] {
         return [
-            UIAction(title: ViewType.list.rawValue,
+            UIAction(title: ViewType.list.title,
                      image: UIImage(systemName: "list.bullet"),
                      state: manager.viewType == .list ? .on : .off,
                      handler: { _ in
-                         UserDefaults.standard.set(ViewType.list.rawValue, forKey: ViewType.settingName)
-                         self.manager.viewType = .list
+                         self.manager.setViewTypeSetting(.list)
             }),
-            UIAction(title: ViewType.icons.rawValue,
+            UIAction(title: ViewType.icons.title,
                      image: UIImage(systemName: "rectangle.grid.2x2"),
                      state: manager.viewType == .icons ? .on : .off,
                      handler: { _ in
-                         UserDefaults.standard.set(ViewType.icons.rawValue, forKey: ViewType.settingName)
-                         self.manager.viewType = .icons
+                         self.manager.setViewTypeSetting(.icons)
             })
         ]
     }
@@ -159,7 +157,7 @@ final class FilesViewController: UIViewController {
         }
     }
     
-    func  handleCellTap(indexPath: IndexPath) {
+    func handleCellTap(indexPath: IndexPath) {
         let file = manager.filesData[indexPath.row]
         
         switch manager.viewMode {
@@ -171,7 +169,7 @@ final class FilesViewController: UIViewController {
         }
     }
     
-    func  handleBarButtonTap() {
+    func handleBarButtonTap() {
         self.manager.handleSelectionCompleted()
         self.manager.viewMode = .view
     }
@@ -205,6 +203,9 @@ extension FilesViewController: FilesManagerServiceDelegate {
         setUpNavigationBar()
     }
     
+    func pushViewController(_ viewController: UIViewController) {
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - Appearance Methods
@@ -216,12 +217,12 @@ private extension FilesViewController {
         switch manager.viewMode {
         case .select:
             let cancelBarButtonItem = UIBarButtonItem(systemItem: .cancel,
-                                                 primaryAction: UIAction(handler: { _ in
+                                                      primaryAction: UIAction(handler: { _ in
                 self.handleBarButtonTap()
             }))
             
             let deleteBarButtonItem = UIBarButtonItem(systemItem: .trash,
-                                                 primaryAction: UIAction(handler: { _ in
+                                                      primaryAction: UIAction(handler: { _ in
                 self.manager.deleteFiles()
                 self.handleBarButtonTap()
             }))
@@ -230,9 +231,9 @@ private extension FilesViewController {
             
         case .view:
             let rightBarButtonItem = UIBarButtonItem(title: nil,
-                                                 image: UIImage(systemName: "ellipsis.circle"),
-                                                 primaryAction: nil,
-                                                 menu: mainMenu)
+                                                     image: UIImage(systemName: "ellipsis.circle"),
+                                                     primaryAction: nil,
+                                                     menu: mainMenu)
             
             self.navigationItem.rightBarButtonItem = rightBarButtonItem
         }

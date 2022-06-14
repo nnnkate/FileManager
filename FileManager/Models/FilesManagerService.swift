@@ -25,7 +25,7 @@ final class FilesManagerService {
     }
     
     var currentDirectory = FileManager.default.urls(for: .documentDirectory,
-                                                     in: .userDomainMask).first
+                                                    in: .userDomainMask).first
     
     var filesData = [FilesUnit]() {
         didSet {
@@ -52,8 +52,8 @@ final class FilesManagerService {
             let name = $0.lastPathComponent
             
             return FilesUnit(name: name,
-                      path: $0,
-                      type: name.contains(".png") || name.contains(".jpeg") ? .image : .folder)
+                             path: $0,
+                             type: name.contains(".png") || name.contains(".jpeg") ? .image : .folder)
         }
         
         delegate?.reloadData()
@@ -93,14 +93,15 @@ final class FilesManagerService {
         case .folder:
             let selectFolderViewContoller = FilesViewController()
             selectFolderViewContoller.manager.currentDirectory = newDirectory
-            navigationController?.pushViewController(selectFolderViewContoller, animated: true)
+            delegate?.pushViewController(selectFolderViewContoller)
 
         default:
             let selectImageViewContoller = ImageViewController()
             if let data = try? Data(contentsOf: newDirectory) {
                 selectImageViewContoller.image = UIImage(data: data)
             }
-            navigationController?.pushViewController(selectImageViewContoller, animated: true)
+            delegate?.pushViewController(selectImageViewContoller)
+ 
         }
     }
     
@@ -137,7 +138,14 @@ final class FilesManagerService {
     
     func handleSelectionCompleted() {
         selectedFiles.removeAll()
-        updateFilesData()
+        delegate?.reloadData()
+    }
+    
+    // MARK: - Settings handling methods
+    
+    func setViewTypeSetting(_ viewType: ViewType) {
+        UserDefaults.standard.set(viewType.rawValue, forKey: ViewType.settingName)
+        self.viewType = .list
     }
 }
 

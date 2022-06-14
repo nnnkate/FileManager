@@ -38,9 +38,4 @@ extension FilesViewController: PHPickerViewControllerDelegate {
             
         picker.dismiss(animated: true)
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let fileUrl = info[UIImagePickerController.InfoKey.imageURL.rawValue] as? URL else { return }
-        print(fileUrl.lastPathComponent)
-    }
 }

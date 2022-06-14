@@ -10,4 +10,8 @@ enum ViewType: String {
     
     case list = "List"
     case icons = "Icons"
+    
+    var title: String {
+        return self.rawValue
+    }
 }

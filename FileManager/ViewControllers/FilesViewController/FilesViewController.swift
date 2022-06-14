@@ -108,11 +108,13 @@ final class FilesViewController: UIViewController {
   
         manager.delegate = self
         
+        AuthorizationService.shared.runAuthorization()
+        
         setupAppearance()
         addSubviews()
         configureLayout()
         
-        setUpNavigationBar()
+        setupNavigationBar()
         
         manager.updateFilesData()
     }
@@ -196,11 +198,11 @@ extension FilesViewController: FilesManagerServiceDelegate {
             filesTableView.isHidden = true
             filesCollectionView.isHidden = false
         }
-        self.setUpNavigationBar()
+        self.setupNavigationBar()
     }
     
     func handleViewModeChange() {
-        setUpNavigationBar()
+        setupNavigationBar()
     }
     
     func pushViewController(_ viewController: UIViewController) {
@@ -211,7 +213,7 @@ extension FilesViewController: FilesManagerServiceDelegate {
 // MARK: - Appearance Methods
 
 private extension FilesViewController {
-    private func setUpNavigationBar() {
+    private func setupNavigationBar() {
         self.navigationItem.rightBarButtonItems?.removeAll()
         
         switch manager.viewMode {
@@ -261,5 +263,26 @@ private extension FilesViewController {
             filesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10)
         ])
     }
+}
+
+// MARK: AuthorizationServiceDelegate
+
+extension FilesViewController: AuthorizationServiceDelegate {
+    func handleErrorFaceIDAuthorization() {
+        let alertController = UIAlertController(title: "Authentication failed",
+                                                message: "You could not be verified; please try again.",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alertController, animated: true)
+    }
+    
+    func handleNoBiometryFaceIDAuthorization() {
+        let alertController = UIAlertController(title: "Biometry unavailable",
+                                                message: "Your device is not configured for biometric authentication.",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alertController, animated: true)
+    }
+    
 }
 

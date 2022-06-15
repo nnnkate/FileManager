@@ -101,6 +101,8 @@ final class FilesViewController: UIViewController {
         return UIMenu(title: "Menu", children: mainMenuItems)
     }
     
+    private var settingPasswordAlert: UIAlertController?
+    
     // MARK: - UIViewController
 
     override func viewDidLoad() {
@@ -261,13 +263,6 @@ private extension FilesViewController {
 // MARK: AuthorizationServiceDelegate
 
 extension FilesViewController: AuthorizationServiceDelegate {
-    func handleErrorFaceIDAuthorization() {
-        let alertController = UIAlertController(title: "Authentication failed",
-                                                message: "You could not be verified; please try again.",
-                                                preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alertController, animated: true)
-    }
     
     func handleNoBiometryFaceIDAuthorization() {
         let alertController = UIAlertController(title: "Biometry unavailable",
@@ -294,11 +289,58 @@ extension FilesViewController: AuthorizationServiceDelegate {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         alertController.addTextField { textField in
+            textField.isSecureTextEntry = true
             textField.placeholder = "Password"
             
         }
         
         self.present(alertController, animated: true)
+    }
+    
+    func handlePasswordSetting(handler: @escaping (String) -> Void) {
+        let alertController = UIAlertController(title: "Set password",
+                                                message: "To work with application, set the application password",
+                                                preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Save",
+                                                style: .default) { _ in
+            guard let textFields = alertController.textFields else { return }
+            
+            if let textField = textFields.first, let text = textField.text {
+                handler(text)
+            }
+        })
+        
+        alertController.addTextField { textField in
+            textField.isSecureTextEntry = true
+            textField.placeholder = "Password"
+            textField.addTarget(self, action: #selector(self.textChanged), for: .editingChanged)
+            
+        }
+        alertController.addTextField { textField in
+            textField.isSecureTextEntry = true
+            textField.placeholder = "Confirm"
+            textField.addTarget(self, action: #selector(self.textChanged), for: .editingChanged)
+        }
+        
+        alertController.actions[0].isEnabled = false
+        
+        settingPasswordAlert = alertController
+        
+        self.present(alertController, animated: true)
+        
+    }
+    
+    @objc func textChanged(_ sender: Any) {
+        var passwordMatched = false
+        
+        if let textFields = settingPasswordAlert?.textFields, textFields.count > 1  {
+            if textFields[0].text == textFields[1].text {
+                    passwordMatched = true
+            }
+        }
+        
+        settingPasswordAlert?.actions[0].isEnabled = passwordMatched
     }
 }
 

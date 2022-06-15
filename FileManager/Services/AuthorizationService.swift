@@ -23,12 +23,10 @@ class AuthorizationService {
     // MARK: - Authorization methods
     
     func runAuthorization() {
-//        guard let password = KeychainService.shared.getKeychain() else {
-//            requestAuthorization()
-//            return
-//        }
-        
-        let password = "lolo"
+        guard let password = KeychainService.shared.getKeychain() else {
+            requestAuthorization()
+            return
+        }
         
         faceIDAutorization() {  [weak self] result in
             if !result {
@@ -43,7 +41,6 @@ class AuthorizationService {
                 self.passwordIDAutorization(password: password)
             }
         }
-        
     }
     
     private func faceIDAutorization(completion: @escaping (Bool) -> Void) {
@@ -53,13 +50,11 @@ class AuthorizationService {
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             let reason = "Identify yourself!"
 
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
-                [weak self] success, authenticationError in
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 DispatchQueue.main.async {
                     if success {
                         completion(true)
                     } else {
-                        //self?.delegate?.handleErrorFaceIDAuthorization()
                         completion(false)
                     }
                 }
@@ -71,6 +66,8 @@ class AuthorizationService {
     }
     
     func requestAuthorization() {
-        print("Authorization")
+        self.delegate?.handlePasswordSetting() { enteredPassword in
+            KeychainService.shared.setKeychain(value: enteredPassword)
+        }
     }
 }

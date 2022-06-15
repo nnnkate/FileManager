@@ -29,7 +29,7 @@ class KeychainService {
         keychain.get(keychainKey)
     }
     
-    func getKeychain(value: String) {
+    func setKeychain(value: String) {
         keychain.set(value, forKey: keychainKey)
     }
 }

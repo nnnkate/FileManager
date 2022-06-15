@@ -6,7 +6,7 @@
 //
 
 protocol AuthorizationServiceDelegate {
-    func handleErrorFaceIDAuthorization()
     func handleNoBiometryFaceIDAuthorization()
     func handlePasswordIDAutorization(handler: @escaping (String?) -> Void)
+    func handlePasswordSetting(handler: @escaping (String) -> Void)
 }

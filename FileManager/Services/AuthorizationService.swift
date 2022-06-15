@@ -23,40 +23,51 @@ class AuthorizationService {
     // MARK: - Authorization methods
     
     func runAuthorization() {
-        guard let password = KeychainService.shared.getKeychain() else {
-            requestAuthorization()
-            return
+//        guard let password = KeychainService.shared.getKeychain() else {
+//            requestAuthorization()
+//            return
+//        }
+        
+        let password = "lolo"
+        
+        faceIDAutorization() {  [weak self] result in
+            if !result {
+                self?.passwordIDAutorization(password: password)
+            }
+        }
+    }
+    
+    private func passwordIDAutorization(password: String) {
+        self.delegate?.handlePasswordIDAutorization() { enteredPassword in
+            if enteredPassword != password {
+                self.passwordIDAutorization(password: password)
+            }
         }
         
-        faceIDAutorization()
-        passwordIDAutorization()
     }
     
-    private func passwordIDAutorization() {
-        
-        
-    }
-    
-    private func faceIDAutorization() {
+    private func faceIDAutorization(completion: @escaping (Bool) -> Void) {
         let context = LAContext()
-            var error: NSError?
+        var error: NSError?
 
-            if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-                let reason = "Identify yourself!"
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "Identify yourself!"
 
-                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
-                    [weak self] success, authenticationError in
-                    DispatchQueue.main.async {
-                        if success {
-                            print("aaa")
-                        } else {
-                            self?.delegate?.handleErrorFaceIDAuthorization()
-                        }
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+                [weak self] success, authenticationError in
+                DispatchQueue.main.async {
+                    if success {
+                        completion(true)
+                    } else {
+                        //self?.delegate?.handleErrorFaceIDAuthorization()
+                        completion(false)
                     }
                 }
-            } else {
-                self.delegate?.handleNoBiometryFaceIDAuthorization()
             }
+        } else {
+            self.delegate?.handleNoBiometryFaceIDAuthorization()
+            completion(false)
+        }
     }
     
     func requestAuthorization() {

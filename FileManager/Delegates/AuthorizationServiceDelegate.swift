@@ -8,4 +8,5 @@
 protocol AuthorizationServiceDelegate {
     func handleErrorFaceIDAuthorization()
     func handleNoBiometryFaceIDAuthorization()
+    func handlePasswordIDAutorization(handler: @escaping (String?) -> Void)
 }

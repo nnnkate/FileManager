@@ -22,6 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        AuthorizationService.shared.delegate = viewController
+        AuthorizationService.shared.runAuthorization()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

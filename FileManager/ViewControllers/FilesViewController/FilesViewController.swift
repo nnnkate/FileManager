@@ -107,9 +107,7 @@ final class FilesViewController: UIViewController {
         super.viewDidLoad()
   
         manager.delegate = self
-        
-        AuthorizationService.shared.runAuthorization()
-        
+       
         setupAppearance()
         addSubviews()
         configureLayout()
@@ -124,28 +122,23 @@ final class FilesViewController: UIViewController {
                                                 message: "Enter a name for this folder",
                                                 preferredStyle: .alert)
         
-        let saveAction = UIAlertAction(title: "Save",
-                                       style: .default) { _ in
-            guard let textFields = alertController.textFields else {
-                return
-            }
-            
-            if let nameTextField = textFields.first {
-                self.manager.addDirectory(name: nameTextField.text ?? "")
-            }
-        }
+        alertController.addAction(UIAlertAction(title: "Save",
+                                                style: .default) { _ in
+            guard let textFields = alertController.textFields else { return }
+                     
+             if let nameTextField = textFields.first {
+                 self.manager.addDirectory(name: nameTextField.text ?? "")
+             }
+         })
         
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .cancel)
-        
-        alertController.addAction(saveAction)
-        alertController.addAction(cancelAction)
+        alertController.addAction(UIAlertAction(title: "Cancel",
+                                                style: .cancel))
         
         alertController.addTextField { textField in
             textField.placeholder = "Name"
         }
         
-        present(alertController, animated: true)
+        self.present(alertController, animated: true)
     }
     
     private func handleNewFileButtonTap(type: FilesUnitType = .folder) {
@@ -284,5 +277,28 @@ extension FilesViewController: AuthorizationServiceDelegate {
         self.present(alertController, animated: true)
     }
     
+    func handlePasswordIDAutorization(handler: @escaping (String?) -> Void) {
+        let alertController = UIAlertController(title: "Enter password",
+                                                message: "To work with application, enter the application password",
+                                                preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "OK",
+                                                style: .default) { _ in
+            guard let textFields = alertController.textFields else { return }
+
+            if let textField = textFields.first {
+                handler(textField.text)
+            }
+        })
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        alertController.addTextField { textField in
+            textField.placeholder = "Password"
+            
+        }
+        
+        self.present(alertController, animated: true)
+    }
 }
 

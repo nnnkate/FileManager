@@ -145,7 +145,7 @@ final class FilesManagerService {
     
     func setViewTypeSetting(_ viewType: ViewType) {
         UserDefaults.standard.set(viewType.rawValue, forKey: ViewType.settingName)
-        self.viewType = .list
+        self.viewType = viewType
     }
 }
 

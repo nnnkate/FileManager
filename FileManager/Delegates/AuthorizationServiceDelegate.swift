@@ -5,8 +5,7 @@
 //  Created by Екатерина Неделько on 14.06.22.
 //
 
-protocol AuthorizationServiceDelegate {
-    func handleNoBiometryFaceIDAuthorization()
+protocol AuthorizationServiceDelegate: AnyObject {
     func handlePasswordIDAutorization(handler: @escaping (String?) -> Void)
     func handlePasswordSetting(handler: @escaping (String) -> Void)
 }

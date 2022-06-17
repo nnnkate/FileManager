@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol FilesManagerServiceDelegate {
+protocol FilesManagerServiceDelegate: AnyObject {
     func reloadData()
     func handleViewTypeChange()
     func handleViewModeChange()

@@ -263,15 +263,6 @@ private extension FilesViewController {
 // MARK: AuthorizationServiceDelegate
 
 extension FilesViewController: AuthorizationServiceDelegate {
-    
-    func handleNoBiometryFaceIDAuthorization() {
-        let alertController = UIAlertController(title: "Biometry unavailable",
-                                                message: "Your device is not configured for biometric authentication.",
-                                                preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        self.present(alertController, animated: true)
-    }
-    
     func handlePasswordIDAutorization(handler: @escaping (String?) -> Void) {
         let alertController = UIAlertController(title: "Enter password",
                                                 message: "To work with application, enter the application password",

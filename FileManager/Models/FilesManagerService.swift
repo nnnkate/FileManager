@@ -36,7 +36,7 @@ final class FilesManagerService {
     
     var selectedFiles = [FilesUnit]()
     
-    var delegate: FilesManagerServiceDelegate?
+    weak var delegate: FilesManagerServiceDelegate?
     
     // MARK: - Private properties
     

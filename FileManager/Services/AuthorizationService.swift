@@ -14,7 +14,7 @@ class AuthorizationService {
     
     static let shared = AuthorizationService()
     
-    var delegate: AuthorizationServiceDelegate?
+    weak var delegate: AuthorizationServiceDelegate?
     
     // MARK: - Initialization
     
@@ -28,9 +28,9 @@ class AuthorizationService {
             return
         }
         
-        faceIDAutorization() {  [weak self] result in
+        faceIDAutorization() {  result in
             if !result {
-                self?.passwordIDAutorization(password: password)
+                self.passwordIDAutorization(password: password)
             }
         }
     }
@@ -60,7 +60,6 @@ class AuthorizationService {
                 }
             }
         } else {
-            self.delegate?.handleNoBiometryFaceIDAuthorization()
             completion(false)
         }
     }

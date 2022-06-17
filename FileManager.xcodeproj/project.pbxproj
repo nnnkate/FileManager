@@ -29,6 +29,7 @@
 		85D6EFDA284CF97200E3FB7B /* FilesManagerServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D6EFD9284CF97200E3FB7B /* FilesManagerServiceDelegate.swift */; };
 		85E0FBB628546D7F00E8601A /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0FBB528546D7F00E8601A /* ViewType.swift */; };
 		85E0FBB828546DB700E8601A /* ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E0FBB728546DB700E8601A /* ViewMode.swift */; };
+		85F4C934285CBDCD0045B2EF /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F4C933285CBDCD0045B2EF /* NotificationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		85D6EFD9284CF97200E3FB7B /* FilesManagerServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesManagerServiceDelegate.swift; sourceTree = "<group>"; };
 		85E0FBB528546D7F00E8601A /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
 		85E0FBB728546DB700E8601A /* ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMode.swift; sourceTree = "<group>"; };
+		85F4C933285CBDCD0045B2EF /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		87EE35CD73D7DC953BB422FB /* Pods-FileManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileManager.release.xcconfig"; path = "Target Support Files/Pods-FileManager/Pods-FileManager.release.xcconfig"; sourceTree = "<group>"; };
 		EFA9BA456FC33F9061C223F6 /* Pods-FileManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileManager.debug.xcconfig"; path = "Target Support Files/Pods-FileManager/Pods-FileManager.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +104,7 @@
 			children = (
 				857798142858FAB1006EA688 /* KeychainService.swift */,
 				85B1C7962859208800FE1392 /* AuthorizationService.swift */,
+				85F4C933285CBDCD0045B2EF /* NotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				85D6EFD5284CF67800E3FB7B /* FilesUnit.swift in Sources */,
 				85D6EFDA284CF97200E3FB7B /* FilesManagerServiceDelegate.swift in Sources */,
 				85C42B642846967300015B3B /* AppDelegate.swift in Sources */,
+				85F4C934285CBDCD0045B2EF /* NotificationService.swift in Sources */,
 				85C42B662846967300015B3B /* SceneDelegate.swift in Sources */,
 				85C42B7F2846AB9300015B3B /* FilesTableViewCell.swift in Sources */,
 				85B1C7972859208800FE1392 /* AuthorizationService.swift in Sources */,

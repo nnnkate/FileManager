@@ -56,23 +56,23 @@ final class FilesViewController: UIViewController {
         return [
             UIAction(title: "Select",
                      image: UIImage(systemName: "checkmark.circle"),
-                     handler: { (_) in
-                         self.manager.viewMode = .select
+                     handler: { [weak self] _ in
+                         self?.manager.viewMode = .select
             }),
             UIAction(title: "Add new folder",
                      image: UIImage(systemName: "folder.badge.plus"),
-                     handler: { _ in
-                         self.handleNewFileButtonTap()
+                     handler: { [weak self] _ in
+                         self?.handleNewFileButtonTap()
             }),
             UIAction(title: "Add new photo",
                      image: UIImage(systemName: "photo"),
-                     handler: { _ in
-                         self.handleNewFileButtonTap(type: .photo)
+                     handler: { [weak self] _ in
+                         self?.handleNewFileButtonTap(type: .photo)
             }),
             UIAction(title: "Upload image",
                      image: UIImage(systemName: "rectangle.stack.badge.plus"),
-                     handler: { _ in
-                         self.handleNewFileButtonTap(type: .image)
+                     handler: { [weak self] _ in
+                         self?.handleNewFileButtonTap(type: .image)
             }),
             UIMenu(title: "",
                    options: .displayInline,
@@ -85,14 +85,14 @@ final class FilesViewController: UIViewController {
             UIAction(title: ViewType.list.title,
                      image: UIImage(systemName: "list.bullet"),
                      state: manager.viewType == .list ? .on : .off,
-                     handler: { _ in
-                         self.manager.setViewTypeSetting(.list)
+                     handler: { [weak self] _ in
+                         self?.manager.setViewTypeSetting(.list)
             }),
             UIAction(title: ViewType.icons.title,
                      image: UIImage(systemName: "rectangle.grid.2x2"),
                      state: manager.viewType == .icons ? .on : .off,
-                     handler: { _ in
-                         self.manager.setViewTypeSetting(.icons)
+                     handler: { [weak self] _ in
+                         self?.manager.setViewTypeSetting(.icons)
             })
         ]
     }
@@ -125,11 +125,11 @@ final class FilesViewController: UIViewController {
                                                 preferredStyle: .alert)
         
         alertController.addAction(UIAlertAction(title: "Save",
-                                                style: .default) { _ in
+                                                style: .default) { [weak self] _ in
             guard let textFields = alertController.textFields else { return }
                      
              if let nameTextField = textFields.first {
-                 self.manager.addDirectory(name: nameTextField.text ?? "")
+                 self?.manager.addDirectory(name: nameTextField.text ?? "")
              }
          })
         
@@ -214,14 +214,14 @@ private extension FilesViewController {
         switch manager.viewMode {
         case .select:
             let cancelBarButtonItem = UIBarButtonItem(systemItem: .cancel,
-                                                      primaryAction: UIAction(handler: { _ in
-                self.handleBarButtonTap()
+                                                      primaryAction: UIAction(handler: { [weak self] _ in
+                self?.handleBarButtonTap()
             }))
             
             let deleteBarButtonItem = UIBarButtonItem(systemItem: .trash,
-                                                      primaryAction: UIAction(handler: { _ in
-                self.manager.deleteFiles()
-                self.handleBarButtonTap()
+                                                      primaryAction: UIAction(handler: { [weak self] _ in
+                self?.manager.deleteFiles()
+                self?.handleBarButtonTap()
             }))
             
             self.navigationItem.rightBarButtonItems = [deleteBarButtonItem, cancelBarButtonItem]

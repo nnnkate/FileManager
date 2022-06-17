@@ -8,11 +8,18 @@
 import UserNotifications
 
 class NotificationService {
+    
+    // MARK: - Public Properties
+    
     static let shared = NotificationService()
+    
+    // MARK: - Private Properties
     
     private let center = UNUserNotificationCenter.current()
     
     private var notificationIsAllowed = false
+    
+    // MARK: - Initialization
     
     private init() { }
     
@@ -25,6 +32,8 @@ class NotificationService {
             }
         }
     }
+    
+    // MARK: - Notification methods
     
     func sendLocalAfterClosingNotification() {
         let content = UNMutableNotificationContent()

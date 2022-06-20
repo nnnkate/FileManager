@@ -80,7 +80,8 @@ private extension FilesCollectionViewCell {
         NSLayoutConstraint.activate([
             fileImageView.centerXAnchor.constraint(equalTo: layerView.centerXAnchor),
             fileImageView.centerYAnchor.constraint(equalTo: layerView.centerYAnchor),
-            fileImageView.widthAnchor.constraint(equalTo: fileImageView.heightAnchor)
+            fileImageView.leadingAnchor.constraint(equalTo: layerView.leadingAnchor),
+            fileImageView.topAnchor.constraint(equalTo: layerView.topAnchor)
         ])
     }
 }

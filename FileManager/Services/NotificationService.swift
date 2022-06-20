@@ -17,18 +17,15 @@ class NotificationService {
     
     private let center = UNUserNotificationCenter.current()
     
-    private var notificationIsAllowed = false
-    
     // MARK: - Initialization
     
     private init() { }
     
     func requestNotificationsPermissions() {
         let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .badge, .sound]) { [weak self] success, error in
-            self?.notificationIsAllowed = success
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
-                self?.sendLocalEverydayNotification()
+                self.sendLocalEverydayNotification()
             }
         }
     }
@@ -36,37 +33,29 @@ class NotificationService {
     // MARK: - Notification methods
     
     func sendLocalAfterClosingNotification() {
-        let content = UNMutableNotificationContent()
-        content.title = "File manager"
-        content.body = "Сome back sooner!"
-
         let interval = 600
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(interval),
                                                         repeats: true)
-
-        let request = UNNotificationRequest(identifier: "afterClosingNotificationID",
-                                            content: content,
-                                            trigger: trigger)
-
-        center.add(request) { error in
-            if error != nil {
-              print("Error")
-            }
-        }
+        
+        createNotification(title: "File manager", body: "Сome back sooner!", trigger: trigger, id: "afterClosingNotificationID")
     }
     
     private func sendLocalEverydayNotification() {
-        let content = UNMutableNotificationContent()
-        content.title = "Good morning"
-        content.body = "Don't forget to add new files!"
-
         var dateComponents = DateComponents()
         dateComponents.hour = 10
     
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents,
                                                     repeats: true)
+        
+        createNotification(title: "Good morning", body: "Don't forget to add new files!", trigger: trigger, id: "EverydayNotificationID")
+    }
+    
+    private func createNotification(title: String, body: String, trigger: UNNotificationTrigger, id: String) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
 
-        let request = UNNotificationRequest(identifier: "EverydayNotificationID",
+        let request = UNNotificationRequest(identifier: id,
                                             content: content,
                                             trigger: trigger)
 

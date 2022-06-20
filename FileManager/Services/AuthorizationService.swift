@@ -23,12 +23,12 @@ class AuthorizationService {
     // MARK: - Authorization methods
     
     func runAuthorization() {
-        guard let password = KeychainService.shared.getKeychain() else {
-            requestAuthorization()
+        guard let password = KeychainService.shared.getPassword() else {
+            createPassword()
             return
         }
         
-        faceIDAutorization() {  result in
+        faceIDAutorization() { result in
             if !result {
                 self.passwordIDAutorization(password: password)
             }
@@ -52,11 +52,7 @@ class AuthorizationService {
 
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                 DispatchQueue.main.async {
-                    if success {
-                        completion(true)
-                    } else {
-                        completion(false)
-                    }
+                   completion(success)
                 }
             }
         } else {
@@ -64,9 +60,9 @@ class AuthorizationService {
         }
     }
     
-    func requestAuthorization() {
+    func createPassword() {
         self.delegate?.handlePasswordSetting() { enteredPassword in
-            KeychainService.shared.setKeychain(value: enteredPassword)
+            KeychainService.shared.setPassword(value: enteredPassword)
         }
     }
 }

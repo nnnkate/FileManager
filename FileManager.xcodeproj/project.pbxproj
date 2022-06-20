@@ -13,6 +13,7 @@
 		850733D228510C4200727950 /* FilesViewController+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850733D128510C4200727950 /* FilesViewController+CollectionView.swift */; };
 		850733D428510CE700727950 /* FilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850733D328510CE700727950 /* FilesCollectionViewCell.swift */; };
 		850733D828510E5800727950 /* FilesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850733D728510E5800727950 /* FilesCell.swift */; };
+		856AD1BF28609ACC00BA611B /* FilesNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856AD1BE28609ACC00BA611B /* FilesNavigationController.swift */; };
 		857798152858FAB1006EA688 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857798142858FAB1006EA688 /* KeychainService.swift */; };
 		859BCA5D284D46FD00932A6E /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859BCA5C284D46FD00932A6E /* ImageViewController.swift */; };
 		85B1C7972859208800FE1392 /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B1C7962859208800FE1392 /* AuthorizationService.swift */; };
@@ -39,6 +40,7 @@
 		850733D128510C4200727950 /* FilesViewController+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilesViewController+CollectionView.swift"; sourceTree = "<group>"; };
 		850733D328510CE700727950 /* FilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewCell.swift; sourceTree = "<group>"; };
 		850733D728510E5800727950 /* FilesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCell.swift; sourceTree = "<group>"; };
+		856AD1BE28609ACC00BA611B /* FilesNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesNavigationController.swift; sourceTree = "<group>"; };
 		857798142858FAB1006EA688 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		859BCA5C284D46FD00932A6E /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		85B1C7962859208800FE1392 /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
@@ -97,6 +99,14 @@
 				850733D328510CE700727950 /* FilesCollectionViewCell.swift */,
 			);
 			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		856AD1BD2860927C00BA611B /* NavigationControllers */ = {
+			isa = PBXGroup;
+			children = (
+				856AD1BE28609ACC00BA611B /* FilesNavigationController.swift */,
+			);
+			path = NavigationControllers;
 			sourceTree = "<group>";
 		};
 		857798162858FFF9006EA688 /* Services */ = {
@@ -162,6 +172,7 @@
 		85C42B792846A62700015B3B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				856AD1BD2860927C00BA611B /* NavigationControllers */,
 				859BCA5B284D46E100932A6E /* ImageViewController */,
 				85D6EFD0284CF40600E3FB7B /* FilesViewController */,
 			);
@@ -346,6 +357,7 @@
 				857798152858FAB1006EA688 /* KeychainService.swift in Sources */,
 				859BCA5D284D46FD00932A6E /* ImageViewController.swift in Sources */,
 				85B1C7992859232D00FE1392 /* AuthorizationServiceDelegate.swift in Sources */,
+				856AD1BF28609ACC00BA611B /* FilesNavigationController.swift in Sources */,
 				85D6EFD5284CF67800E3FB7B /* FilesUnit.swift in Sources */,
 				85D6EFDA284CF97200E3FB7B /* FilesManagerServiceDelegate.swift in Sources */,
 				85C42B642846967300015B3B /* AppDelegate.swift in Sources */,

@@ -17,20 +17,22 @@ class KeychainService {
     
     private let keychain = KeychainSwift()
     
-    private let keychainKey = "keychainKey"
-    
     // MARK: - Initialization
     
     private init() { }
     
     // MARK: - Keychain methods
     
-    func getKeychain() -> String? {
-        keychain.get(keychainKey)
+    func getPassword() -> String? {
+        keychain.get(KeychainKey.password.rawValue)
     }
     
-    func setKeychain(value: String) {
-        keychain.set(value, forKey: keychainKey)
+    func setPassword(value: String) {
+        keychain.set(value, forKey: KeychainKey.password.rawValue)
     }
+}
+
+enum KeychainKey: String {
+    case password
 }
 

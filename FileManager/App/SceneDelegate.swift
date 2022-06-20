@@ -18,12 +18,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         let viewController = FilesViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let navigationController = FilesNavigationController(rootViewController: viewController)
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
-        AuthorizationService.shared.delegate = viewController
+        AuthorizationService.shared.delegate = navigationController
         AuthorizationService.shared.runAuthorization()
     }
 

@@ -57,9 +57,8 @@ private extension FilesTableViewCell {
         horizontalStack.spacing = 10
         
         fileNameLabel.font = fileNameLabel.font.withSize(30)
-        fileNameLabel.textColor = .white
-        
-        fileImageView.tintColor = .white
+        fileNameLabel.textColor = .darkGray
+        fileImageView.tintColor = .darkGray
     }
     
     func addSubviews() {

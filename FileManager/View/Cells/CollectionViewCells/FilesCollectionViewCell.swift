@@ -56,8 +56,8 @@ private extension FilesCollectionViewCell {
         verticalStack.distribution = .fillEqually
         verticalStack.spacing = 5
         
-        self.fileImageView.tintColor = .white
-        self.fileNameLabel.textColor = .white
+        self.fileImageView.tintColor = .darkGray
+        self.fileNameLabel.textColor = .darkGray
     }
     
     func addSubviews() {

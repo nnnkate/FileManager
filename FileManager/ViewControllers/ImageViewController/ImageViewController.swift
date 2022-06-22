@@ -46,6 +46,8 @@ extension ImageViewController: UIScrollViewDelegate {
 
 private extension ImageViewController {
     private func setupAppearance() {
+        view.backgroundColor = .white
+        
         imageView.image = image
         imageView.contentMode = .scaleAspectFit
     }

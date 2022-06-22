@@ -235,6 +235,8 @@ private extension FilesViewController {
     }
     
     private func setupAppearance() {
+        view.backgroundColor = .white
+        
         let viewTypeSetting = UserDefaults.standard.string(forKey: ViewType.settingName)
         manager.viewType = viewTypeSetting == ViewType.icons.rawValue ? .icons : .list
         
